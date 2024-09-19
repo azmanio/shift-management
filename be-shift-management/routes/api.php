@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\AttendanceController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\ShiftController;
+use App\Http\Controllers\API\ShiftRequestController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +20,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('users', UserController::class);
+Route::apiResource('employees', EmployeeController::class);
+Route::apiResource('shifts', ShiftController::class);
+Route::apiResource('attendances', AttendanceController::class);
+Route::apiResource('shift-requests', ShiftRequestController::class);
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('refresh', [AuthController::class, 'refresh']);
+Route::get('me', [AuthController::class, 'me']);
